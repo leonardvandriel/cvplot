@@ -89,69 +89,6 @@ Series &Series::legend(bool legend) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<float, float>> &data) {
-  ensureDimsDepth(1, 1);
-  for (const auto &d : data) {
-    entries_.push_back(data_.size());
-    data_.push_back(d.first);
-    data_.push_back(d.second);
-  }
-  return *this;
-}
-
-Series &Series::add(const std::vector<std::pair<float, Point2>> &data) {
-  ensureDimsDepth(1, 2);
-  for (const auto &d : data) {
-    entries_.push_back(data_.size());
-    data_.push_back(d.first);
-    data_.push_back(d.second.x);
-    data_.push_back(d.second.y);
-  }
-  return *this;
-}
-
-Series &Series::add(const std::vector<std::pair<float, Point3>> &data) {
-  ensureDimsDepth(1, 3);
-  for (const auto &d : data) {
-    entries_.push_back(data_.size());
-    data_.push_back(d.first);
-    data_.push_back(d.second.x);
-    data_.push_back(d.second.y);
-    data_.push_back(d.second.z);
-  }
-  return *this;
-}
-
-Series &Series::addValue(const std::vector<float> &values) {
-  std::vector<std::pair<float, float>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i + entries_.size();
-    d.second = values[i++];
-  }
-  return add(data);
-}
-
-Series &Series::addValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<float, Point2>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i + entries_.size();
-    d.second = values[i++];
-  }
-  return add(data);
-}
-
-Series &Series::addValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<float, Point3>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i + entries_.size();
-    d.second = values[i++];
-  }
-  return add(data);
-}
-
 Series &Series::add(float key, float value) {
   return add(std::vector<std::pair<float, float>>({{key, value}}));
 }
@@ -176,50 +113,7 @@ Series &Series::addValue(float value_a, float value_b, float value_c) {
   return addValue(std::vector<Point3>({{value_a, value_b, value_c}}));
 }
 
-Series &Series::set(const std::vector<std::pair<float, float>> &data) {
-  clear();
-  return add(data);
-}
 
-Series &Series::set(const std::vector<std::pair<float, Point2>> &data) {
-  clear();
-  return add(data);
-}
-
-Series &Series::set(const std::vector<std::pair<float, Point3>> &data) {
-  clear();
-  return add(data);
-}
-
-Series &Series::setValue(const std::vector<float> &values) {
-  std::vector<std::pair<float, float>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i;
-    d.second = values[i++];
-  }
-  return set(data);
-}
-
-Series &Series::setValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<float, Point2>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i;
-    d.second = values[i++];
-  }
-  return set(data);
-}
-
-Series &Series::setValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<float, Point3>> data(values.size());
-  auto i = 0;
-  for (auto &d : data) {
-    d.first = i;
-    d.second = values[i++];
-  }
-  return set(data);
-}
 
 Series &Series::set(float key, float value) {
   return set(std::vector<std::pair<float, float>>({{key, value}}));
